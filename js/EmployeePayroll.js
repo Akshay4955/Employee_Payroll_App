@@ -6,6 +6,10 @@ const salary = document.querySelector('#salary');
         });        
 
 class EmployeePayrollData {
+    get id() {return this._id;}
+    set id(id) {
+        this._id = id;
+    }
     get name() { return this._name; }
     set name(name) {
         let nameRegex = RegExp('^[A-Z][a-z]{2,}$');
@@ -33,7 +37,7 @@ class EmployeePayrollData {
         if (startDate < new Date)
             this._startDate = startDate;
         else
-            throw "Invelid Date"
+            throw "Invalid Date";
     }
 
     get notes() { return this._notes; }
@@ -43,7 +47,8 @@ class EmployeePayrollData {
 
     toString() {
         const empDate = this._startDate.toLocaleString().split(',')[0];
-        return "name = " + this.name + ", profilePic = " + this.profilePic + ", salary = " + this.salary + ", gender = " + this.gender + ", department = " + this.department + ", startDate = " + empDate + ", notes= " + this.notes;
+        return "id = " + this._id + "name = " + this.name + ", profilePic = " + this.profilePic + ", salary = " + this.salary +
+        ", gender = " + this.gender + ", department = " + this.department + ", startDate = " + empDate + ", notes= " + this.notes;
     }
 }
 
