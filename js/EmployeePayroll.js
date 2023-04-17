@@ -68,17 +68,32 @@ class EmployeePayrollData {
     }
 }
 
-function createObject() {
+function save() {
+    try {
+        let employeePayrollData = createEmployeePayroll();
+    } catch (e) {
+        return;
+    }
+}
+
+const createEmployeePayroll = () => {
     let employeePayrollData = new EmployeePayrollData();
-    employeePayrollData.name = getInputValue("name");
+    try {
+        employeePayrollData.name = getInputValue("name");
+    } catch (e) {
+        setTextValue('.text-error', e);
+        throw e;
+    }
+    
     employeePayrollData.profilePic = getSelectedValues("[name = profile]").pop();
     employeePayrollData.gender = getSelectedValues("[name = gender]").pop();
     employeePayrollData.department = getSelectedValues("[name = department]");
     employeePayrollData.salary = getInputValue("salary");
     employeePayrollData.notes = getInputValue("notes");
-    employeePayrollData.startDate = new Date(getInputValue("year") + getInputValue("month") + getInputValue("day"));
+    employeePayrollData.startDate = new Date(getInputValue("year") + getInputValue("month") +
+                                     getInputValue("day"));
     alert(employeePayrollData.toString());
-
+    return employeePayrollData;
 }
 
 function getInputValue(id) {
