@@ -3,12 +3,16 @@ const salary = document.querySelector('#salary');
         output.textContent = salary.value;
         salary.addEventListener('input', function() {
             output.textContent = salary.value;
-        });
+        });        
 
 class EmployeePayrollData {
     get name() { return this._name; }
     set name(name) {
-        this._name = name;
+        let nameRegex = RegExp('^[A-Z][a-z]{2,}$');
+        if (nameRegex.test(name))
+            this._name = name; 
+        else
+            throw "Name is Incorrect"; 
     }
     get profilePic() { return this._profilePic; }
     set profilePic(profilePic) { this._profilePic = profilePic; }
@@ -26,7 +30,10 @@ class EmployeePayrollData {
 
     get startDate() { return this._startDate; }
     set startDate(startDate) {
-        this._startDate = startDate;
+        if (startDate < new Date)
+            this._startDate = startDate;
+        else
+            throw "Invelid Date"
     }
 
     get notes() { return this._notes; }
