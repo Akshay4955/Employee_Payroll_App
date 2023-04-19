@@ -91,7 +91,7 @@ function createEmployeePayroll() {
 function save() {
     try {
         let employeePayrollData = createEmployeePayroll();
-        // callAPI(employeePayrollData);
+        //callAPI(employeePayrollData);
         // const xhr = new XMLHttpRequest();
         // xhr.open("POST", "http://localhost:8080/employee/addemployee");
         // xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
@@ -122,10 +122,10 @@ async function callAPI(employeePayrollData) {
                 "Content-type": "application/json; charset=UTF-8"
               }, 
             body: JSON.stringify ({
-                employeePayrollData,
-                // name: employeePayrollData._name,
-                // salary: employeePayrollData._salary,
-                // gender: employeePayrollData._gender
+                // employeePayrollData,
+                _name: employeePayrollData._name,
+                _salary: employeePayrollData._salary,
+                _gender: employeePayrollData._gender
                 // departmentList: employeePayrollData._department,
                 // date: employeePayrollData._startDate,
                 // notes: employeePayrollData._notes

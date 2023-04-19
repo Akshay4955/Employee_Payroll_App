@@ -1,15 +1,24 @@
+let empPayrollList;
 window.addEventListener('DOMContentLoaded', (event) => {
-    createInnerHtml();
+  empPayrollList = getEmployeePayrollDataFromStorage();
+  document.querySelector(".emp-count").textContent = empPayrollList.length;
+  createInnerHtml();
 });
 
+const getEmployeePayrollDataFromStorage = () => {
+  return localStorage.getItem('EmployeePayrollList') ?
+                      JSON.parse(localStorage.getItem('EmployeePayrollList')) : [];
+}
+
 const createInnerHtml = () => {
-  const headerHtml = "<th></th><th>Name</th><th>Gender</th><th>Department</th><th>Salary</th>" +
-                      "<th>Start Date</th><th>Actions</th>";
+  if (empPayrollList.length == 0) return;
+  const headerHtml = "<th></th> <th>Name</th> <th>Gender</th> <th>Department</th> <th>Salary</th>" +
+                      "<th>Start Date</th> <th>Actions</th>";
   let innerHtml = `${headerHtml}`;
-  let empPayrollList = createEmployeePayrollJSON();
   for (const empPayrollData of empPayrollList) {
+    console.log(empPayrollData);
     innerHtml = `${innerHtml}
-      <tr>
+    <tr>
         <td><img class="profile" alt="" src="${empPayrollData._profilePic}">
         </td>
         <td>${empPayrollData._name}</td>
@@ -26,7 +35,7 @@ const createInnerHtml = () => {
       </tr>
     `;
   }
-    document.querySelector('#table-display').innerHTML = innerHtml;
+    document.querySelector(`#display`).innerHTML = innerHtml;
 }
 
 const createEmployeePayrollJSON = () => {
