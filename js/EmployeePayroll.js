@@ -63,21 +63,12 @@ class EmployeePayrollData {
 
     toString() {
         const empDate = this._startDate.toLocaleString().split(',')[0];
-        return "id = " + this._id + "name = " + this.name + ", profilePic = " + this.profilePic + ", salary = " + this.salary +
+        return "id = " + this._id + ", name = " + this.name + ", profilePic = " + this.profilePic + ", salary = " + this.salary +
         ", gender = " + this.gender + ", department = " + this.department + ", startDate = " + empDate + ", notes= " + this.notes;
     }
 }
 
-function save() {
-    try {
-        let employeePayrollData = createEmployeePayroll();
-        createAndUpdateStorage(employeePayrollData);
-    } catch (e) {
-        return;
-    }
-}
-
-const createEmployeePayroll = () => {
+function createEmployeePayroll() {
     let employeePayrollData = new EmployeePayrollData();
     try {
         employeePayrollData.name = getInputValue("name");
@@ -95,6 +86,51 @@ const createEmployeePayroll = () => {
                                      getInputValue("day"));
     alert(employeePayrollData.toString());
     return employeePayrollData;
+}
+
+function save() {
+    try {
+        let employeePayrollData = createEmployeePayroll();
+        // callAPI(employeePayrollData);
+        // const xhr = new XMLHttpRequest();
+        // xhr.open("POST", "http://localhost:8080/employee/addemployee");
+        // xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        // const body = JSON.stringify({
+        //     name: employeePayrollData._name,
+        //     salary: employeePayrollData._salary,
+        //     gender: employeePayrollData._gender
+        // });
+        // xhr.onload = () => {
+        //     if (xhr.readyState == 4 && xhr.status == 201) {
+        //         console.log(JSON.parse(xhr.responseText));
+        //     } else {
+        //         console.log(`Error: ${xhr.status}`);
+        //     }
+        // };
+        // xhr.send(body);
+        createAndUpdateStorage(employeePayrollData);
+    } catch (e) {
+        return;
+    }
+}
+
+async function callAPI(employeePayrollData) {
+    console.log(employeePayrollData.toString());
+    await fetch ('http://localhost:8080/employee/addemployee', {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+              }, 
+            body: JSON.stringify ({
+                employeePayrollData,
+                // name: employeePayrollData._name,
+                // salary: employeePayrollData._salary,
+                // gender: employeePayrollData._gender
+                // departmentList: employeePayrollData._department,
+                // date: employeePayrollData._startDate,
+                // notes: employeePayrollData._notes
+            })
+        });
 }
 
 function getInputValue(id) {
